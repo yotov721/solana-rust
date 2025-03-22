@@ -6,23 +6,24 @@ import {Voting} from '../target/types/voting'
 
 const IDL = require("../target/idl/voting.json"); // ABI
 
-const votingAddress = new PublicKey("coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF");
+const votingAddress = new PublicKey("CNuzdNkDEkcRYQjQdN7iuZvt7PC82SouEgeRGyJMR497");
 
 describe('Voting', () => {
 
   let context;
   let provider;
-  let votingProgram: Program<Voting>;
+  anchor.setProvider(anchor.AnchorProvider.env());
+  let votingProgram = anchor.workspace.Voting as Program<Voting>;
 
   beforeAll(async () => {
-    context = await startAnchor("", [{name: "voting", programId: votingAddress}], []);
+    /*context = await startAnchor("", [{name: "voting", programId: votingAddress}], []);
 
     provider = new BankrunProvider(context);
 
     votingProgram = new Program<Voting>(
       IDL,
       provider,
-    );
+    );*/
   })
 
   it('Initialize Poll', async () => {
