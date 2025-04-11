@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 
 #[account]
-#[derive(InitSpace)]
+#[derive(InitSpace)] // this macro exposes a property that returns the size needed to create this account on chain
 pub struct Offer {
     pub id: u64,
     pub maker: Pubkey,

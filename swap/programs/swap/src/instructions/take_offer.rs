@@ -19,7 +19,7 @@ pub struct TakeOffer<'info> {
     #[account(mut)]
     pub maker: SystemAccount<'info>,
 
-    pub token_mint_a: InterfaceAccount<'info, Mint>,
+    pub token_mint_a: InterfaceAccount<'info, Mint>, // Interface account that wraps Mint so it can be used with the newer and older token programs
     pub token_mint_b: InterfaceAccount<'info, Mint>,
 
     #[account(
@@ -50,7 +50,7 @@ pub struct TakeOffer<'info> {
 
     #[account(
         mut,
-        close = maker,
+        close = maker, // return the sol back to the maker, when account closes
         has_one = maker,
         has_one = token_mint_a,
         has_one = token_mint_b,
@@ -62,7 +62,7 @@ pub struct TakeOffer<'info> {
     #[account(
         mut,
         associated_token::mint = token_mint_a,
-        associated_token::authority = offer,
+        associated_token::authority = offer, // the vault is controlled by the offer
         associated_token::token_program = token_program
     )]
     vault: InterfaceAccount<'info, TokenAccount>,

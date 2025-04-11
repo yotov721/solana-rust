@@ -15,13 +15,13 @@ declare_id!("BHeDCXvv3fWWrNZDEHthvY13tjXVwGGMDtJqfPwkWcBD");
 pub mod swap { // defines all the instruction handlers
     use super::*;
 
-    pub fn make_offer(
+    pub fn make_offer( // transaction function. Executes instructions - atomic
         context: Context<MakeOffer>,
         id: u64,
         token_a_offered_amount: u64,
         token_b_wanted_amount: u64
     ) -> Result<()> {
-        instructions::make_offer::send_offered_tokens_to_vault(&context, token_a_offered_amount)?; // ? makes the function fail if error is thrown
+        instructions::make_offer::send_offered_tokens_to_vault(&context, token_a_offered_amount)?; // ? makes the function throw an error if call fails
 
         instructions::make_offer::save_offer(context, id, token_b_wanted_amount)
     }

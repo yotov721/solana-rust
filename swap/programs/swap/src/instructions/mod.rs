@@ -5,6 +5,6 @@ pub mod take_offer;
 pub use take_offer::*;
 
 pub mod shared;
-pub use shared::*;
+pub use shared::*; // expose everything from shared.rs
 
 // mod.rs defines the contents of the directory. It acts as the entrypoint for a directory based module

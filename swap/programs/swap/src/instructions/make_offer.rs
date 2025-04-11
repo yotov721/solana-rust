@@ -9,8 +9,8 @@ use crate::{Offer, ANCHOR_DISCRIMINATOR};
 use super::transfer_tokens;
 
 #[derive(Accounts)]
-#[instruction(id: u64)]
-pub struct MakeOffer<'info> {
+#[instruction(id: u64)] // gets access to the id that the client provided when creating the instruction
+pub struct MakeOffer<'info> { // 'info the lifetime of these variables in memory is the same as the underlying account info object
     #[account(mut)]
     pub maker: Signer<'info>,
 
@@ -23,10 +23,10 @@ pub struct MakeOffer<'info> {
     #[account(
         mut,
         associated_token::mint = token_mint_a,
-        associated_token::authority = maker,
+        associated_token::authority = maker, // this account belongs to the maker/signer
         associated_token::token_program = token_program
     )]
-    pub maker_token_account_a: InterfaceAccount<'info, TokenAccount>,
+    pub maker_token_account_a: InterfaceAccount<'info, TokenAccount>, // the input tokens come from the maker
 
     #[account(
         init,
@@ -41,14 +41,14 @@ pub struct MakeOffer<'info> {
         init,
         payer = maker,
         associated_token::mint = token_mint_a,
-        associated_token::authority = offer,
+        associated_token::authority = offer, // owned by the program - the authority is the offer
         associated_token::token_program = token_program
     )]
     pub vault: InterfaceAccount<'info, TokenAccount>,
 
     pub system_program: Program<'info, System>,
-    pub token_program: Interface<'info, TokenInterface>,
-    pub associated_token_program: Program<'info, AssociatedToken>,
+    pub token_program: Interface<'info, TokenInterface>, // the token program
+    pub associated_token_program: Program<'info, AssociatedToken>, // maps associated tokens to their owners and mints
 }
 
 pub fn send_offered_tokens_to_vault(
